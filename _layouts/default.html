@@ -7,7 +7,7 @@
 
 {% seo %}
     <link rel="stylesheet" href="{{ "/assets/css/style.css?v=" | append: site.github.build_revision | relative_url }}">
-    <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@9.4.3/dist/mermaid.min.js"></script>
   </head>
   <body>
     <div class="wrapper">
@@ -31,14 +31,62 @@
       </section>
     </div>
     <script>
+      // Wait for document to be fully loaded
       document.addEventListener('DOMContentLoaded', function() {
+        // Configure Mermaid
         mermaid.initialize({
-          startOnLoad: true,
+          startOnLoad: false,
           theme: 'default',
           securityLevel: 'loose',
           themeVariables: {
             fontSize: '16px'
+          },
+          flowchart: {
+            useMaxWidth: true,
+            htmlLabels: true,
+            curve: 'basis'
           }
+        });
+
+        // Function to handle Mermaid rendering
+        function renderMermaidDiagrams() {
+          // Find all pre code blocks with mermaid class
+          const mermaidBlocks = document.querySelectorAll('pre code.language-mermaid');
+          
+          mermaidBlocks.forEach((block, index) => {
+            // Create a unique ID for each diagram
+            const diagramId = `mermaid-diagram-${index}`;
+            
+            // Create a div to hold the rendered diagram
+            const div = document.createElement('div');
+            div.classList.add('mermaid');
+            div.id = diagramId;
+            div.textContent = block.textContent;
+            
+            // Replace the pre block with the new div
+            block.parentElement.replaceWith(div);
+          });
+
+          // Run Mermaid rendering
+          mermaid.init(undefined, '.mermaid');
+        }
+
+        // Initial render
+        renderMermaidDiagrams();
+
+        // Re-render on any dynamic content changes
+        const observer = new MutationObserver(function(mutations) {
+          mutations.forEach(function(mutation) {
+            if (mutation.addedNodes.length) {
+              renderMermaidDiagrams();
+            }
+          });
+        });
+
+        // Start observing the document for changes
+        observer.observe(document.body, {
+          childList: true,
+          subtree: true
         });
       });
     </script>
