@@ -26,3 +26,12 @@ markdown: kramdown
 kramdown:
   input: GFM
   syntax_highlighter: rouge
+  parse_block_html: true
+
+# Mermaid settings
+mermaid:
+  version: "9.4.3"
+  
+# Additional settings
+exclude: [README.md]
+include: [_layouts]
