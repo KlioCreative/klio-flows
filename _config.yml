@@ -1,0 +1,28 @@
+remote_theme: pages-themes/cayman@v0.2.0
+plugins:
+- jekyll-remote-theme
+
+title: Klio Creative User Flows
+description: Interactive documentation of user flows and system interactions
+show_downloads: false
+
+# Navigation
+nav:
+  - name: Home
+    link: /
+  - name: Freelancer Flows
+    link: /freelancer_technical_flow.html
+  - name: Agency Flows
+    link: /agency_technical_flow.html
+  - name: Admin Flows
+    link: /admin_technical_flow.html
+
+# Theme customization
+github:
+  is_project_page: false
+
+# Build settings
+markdown: kramdown
+kramdown:
+  input: GFM
+  syntax_highlighter: rouge
