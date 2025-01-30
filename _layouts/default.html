@@ -31,46 +31,46 @@
       </section>
     </div>
     <script>
-      // Wait for document to be fully loaded
-      document.addEventListener('DOMContentLoaded', function() {
-        // Configure Mermaid
-        mermaid.initialize({
-          startOnLoad: false,
-          theme: 'default',
-          securityLevel: 'loose',
-          themeVariables: {
-            fontSize: '16px'
-          },
-          flowchart: {
-            useMaxWidth: true,
-            htmlLabels: true,
-            curve: 'basis'
-          }
+      // Configure Mermaid
+      mermaid.initialize({
+        startOnLoad: false,
+        theme: 'default',
+        securityLevel: 'loose',
+        themeVariables: {
+          fontSize: '16px'
+        },
+        flowchart: {
+          useMaxWidth: true,
+          htmlLabels: true,
+          curve: 'basis'
+        }
+      });
+
+      // Function to handle Mermaid rendering
+      function renderMermaidDiagrams() {
+        // Find all pre code blocks with mermaid class
+        const mermaidBlocks = document.querySelectorAll('pre code.language-mermaid');
+        
+        mermaidBlocks.forEach((block, index) => {
+          // Create a unique ID for each diagram
+          const diagramId = `mermaid-diagram-${index}`;
+          
+          // Create a div to hold the rendered diagram
+          const div = document.createElement('div');
+          div.classList.add('mermaid');
+          div.id = diagramId;
+          div.textContent = block.textContent;
+          
+          // Replace the pre block with the new div
+          block.parentElement.replaceWith(div);
         });
 
-        // Function to handle Mermaid rendering
-        function renderMermaidDiagrams() {
-          // Find all pre code blocks with mermaid class
-          const mermaidBlocks = document.querySelectorAll('pre code.language-mermaid');
-          
-          mermaidBlocks.forEach((block, index) => {
-            // Create a unique ID for each diagram
-            const diagramId = `mermaid-diagram-${index}`;
-            
-            // Create a div to hold the rendered diagram
-            const div = document.createElement('div');
-            div.classList.add('mermaid');
-            div.id = diagramId;
-            div.textContent = block.textContent;
-            
-            // Replace the pre block with the new div
-            block.parentElement.replaceWith(div);
-          });
+        // Run Mermaid rendering
+        mermaid.init(undefined, '.mermaid');
+      }
 
-          // Run Mermaid rendering
-          mermaid.init(undefined, '.mermaid');
-        }
-
+      // Wait for document and Mermaid to be fully loaded
+      document.addEventListener('DOMContentLoaded', function() {
         // Initial render
         renderMermaidDiagrams();
 
@@ -90,5 +90,6 @@
         });
       });
     </script>
+    <script src="{{ "/assets/js/diagram-modal.js" | relative_url }}"></script>
   </body>
 </html>
